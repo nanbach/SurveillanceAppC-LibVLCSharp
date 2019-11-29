@@ -11,23 +11,90 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        private DataTable _cameraTB = null;
+        private DataTable _cameraDT = null;
         private SqlConnection _connection;
         private SqlCommand _command;
         private SqlDataAdapter _adapter;
 
-        private LibVLCSharp.WinForms.VideoView[][] cameras = new LibVLCSharp.WinForms.VideoView[3][];
-
-        private string stream, username, password;
+        private LibVLCSharp.WinForms.VideoView[][] cameras;
 
         public Form1()
         {
             InitializeComponent();
 
-            _cameraTB = new DataTable();
-            _connection = new SqlConnection("Data Source=(LocalDB)/MSSQLLocalDB;AttachDbFilename=C:/Users/new/Documents/camdb.mdf;Integrated Security=True;Connect Timeout=30");
+            _cameraDT = new DataTable();
+            _connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\new\\Documents\\camdb.mdf;Integrated Security=True;Connect Timeout=30");
             _command = new SqlCommand();
             _command.Connection = _connection;
+
+            initializeCameras();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            _cameraDT = execSQL("SELECT * FROM camera;");
+            populateStreetTreeView();
+        }
+
+        private void populateStreetTreeView()
+        {
+            DataTable distinctZonesDT = execSQL("SELECT DISTINCT zone FROM camera;");
+            int zoneInd = 0;
+            foreach (DataRow zdr in distinctZonesDT.Rows)
+            {
+                string zone = zdr["zone"].ToString();
+                treeView1.Nodes.Add(zone);
+                DataTable distinctStreetsDT = execSQL("SELECT DISTINCT camera.street FROM camera WHERE zone LIKE '" + zone + "';");
+                int stInd = 0;
+                foreach(DataRow sdr in distinctStreetsDT.Rows)
+                {
+                    string street = sdr["street"].ToString();
+                    treeView1.Nodes[zoneInd].Nodes.Add(street);
+                    DataTable distinctAreasDT = execSQL("SELECT DISTINCT camera.area FROM camera WHERE zone LIKE '" + zone + "' AND street LIKE '" + street + "';");
+                    int areaInd = 0;
+                    foreach (DataRow adr in distinctAreasDT.Rows)
+                    {
+                        string area = adr["area"].ToString();
+                        treeView1.Nodes[zoneInd].Nodes[stInd].Nodes.Add(area);
+                        DataTable ipsDT = execSQL("SELECT camera.ip FROM camera WHERE zone LIKE '" + zone + "' AND street LIKE '" + street + "' AND area LIKE '" + area + "';");
+                        foreach (DataRow cdr in ipsDT.Rows)
+                        {
+                            string ip = cdr["ip"].ToString();
+                            treeView1.Nodes[zoneInd].Nodes[stInd].Nodes[areaInd].Nodes.Add(ip);
+                            Console.WriteLine("zone: " + zone + " street: " + street + " area: " + area);
+                        }
+                        areaInd++;
+                    }
+                    stInd++;
+                }
+                zoneInd++;
+            }
+        }
+
+        private DataTable execSQL(string sql)
+        {
+            DataTable result = new DataTable();
+            try
+            {
+                _connection.Open();
+                _adapter = new SqlDataAdapter(sql, _connection);
+
+                _adapter.Fill(result);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+        }
+
+        private void initializeCameras()
+        {
+            cameras = new LibVLCSharp.WinForms.VideoView[3][];
             for (int i = 0; i < 3; i++)
                 cameras[i] = new LibVLCSharp.WinForms.VideoView[3];
             cameras[0][0] = videoView1;
@@ -39,32 +106,6 @@ namespace WindowsFormsApp1
             cameras[2][0] = videoView7;
             cameras[2][1] = videoView8;
             cameras[2][2] = videoView9;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //commandSql("SELECT *  FROM [camera]");
-            //populateStreetTreeView();
-        }
-
-        private void commandSql(string selectStatement)
-        {
-            String sql = selectStatement;
-            try
-            {
-                _connection.Open();
-                _adapter = new SqlDataAdapter(sql, _connection);
-
-                _adapter.Fill(_cameraTB);
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                _connection.Close();
-            }
         }
 
         private void grid1_Click(object sender, EventArgs e)

@@ -56,6 +56,7 @@
             this.videoView7 = new LibVLCSharp.WinForms.VideoView();
             this.videoView8 = new LibVLCSharp.WinForms.VideoView();
             this.videoView9 = new LibVLCSharp.WinForms.VideoView();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -96,6 +97,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56F));
+            this.tableLayoutPanel1.Controls.Add(this.label1, 8, 0);
             this.tableLayoutPanel1.Controls.Add(this.grid6, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.grid4, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.grid3, 3, 0);
@@ -476,6 +478,20 @@
             this.videoView9.TabIndex = 8;
             this.videoView9.Text = "videoView9";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label1.Location = new System.Drawing.Point(811, 3);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(991, 49);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Video Management System";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -492,6 +508,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -554,6 +571,7 @@
         private LibVLCSharp.WinForms.VideoView videoView7;
         private LibVLCSharp.WinForms.VideoView videoView8;
         private LibVLCSharp.WinForms.VideoView videoView9;
+        private System.Windows.Forms.Label label1;
     }
 }
 
