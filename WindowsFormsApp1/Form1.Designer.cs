@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.grid6 = new System.Windows.Forms.Button();
             this.grid4 = new System.Windows.Forms.Button();
             this.grid3 = new System.Windows.Forms.Button();
@@ -36,27 +37,26 @@
             this.searchBtn = new System.Windows.Forms.Button();
             this.grid1 = new System.Windows.Forms.Button();
             this.playBackBtn = new System.Windows.Forms.Button();
+            this.grid9 = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.videosTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.grid9 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.videosTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.videoView1 = new LibVLCSharp.WinForms.VideoView();
             this.videoView2 = new LibVLCSharp.WinForms.VideoView();
-            this.videoView3 = new LibVLCSharp.WinForms.VideoView();
             this.videoView4 = new LibVLCSharp.WinForms.VideoView();
             this.videoView5 = new LibVLCSharp.WinForms.VideoView();
-            this.videoView6 = new LibVLCSharp.WinForms.VideoView();
             this.videoView7 = new LibVLCSharp.WinForms.VideoView();
             this.videoView8 = new LibVLCSharp.WinForms.VideoView();
+            this.videoView3 = new LibVLCSharp.WinForms.VideoView();
+            this.videoView6 = new LibVLCSharp.WinForms.VideoView();
             this.videoView9 = new LibVLCSharp.WinForms.VideoView();
-            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -74,12 +74,12 @@
             this.videosTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.videoView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoView6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView9)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,6 +114,20 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1809, 55);
             this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label1.Location = new System.Drawing.Point(811, 3);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(991, 49);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Video Management System";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // grid6
             // 
@@ -216,6 +230,18 @@
             this.playBackBtn.Text = "PlayBack";
             this.playBackBtn.UseVisualStyleBackColor = false;
             // 
+            // grid9
+            // 
+            this.grid9.Dock = System.Windows.Forms.DockStyle.Left;
+            this.grid9.Location = new System.Drawing.Point(554, 4);
+            this.grid9.Margin = new System.Windows.Forms.Padding(1);
+            this.grid9.Name = "grid9";
+            this.grid9.Size = new System.Drawing.Size(69, 47);
+            this.grid9.TabIndex = 8;
+            this.grid9.Text = " --|--|--   --|--|--";
+            this.grid9.UseVisualStyleBackColor = true;
+            this.grid9.Click += new System.EventHandler(this.grid9_Click);
+            // 
             // splitContainer2
             // 
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -279,6 +305,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(134, 430);
             this.treeView1.TabIndex = 0;
+            this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
             // 
             // tableLayoutPanel3
             // 
@@ -300,44 +327,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(134, 406);
             this.tableLayoutPanel3.TabIndex = 0;
-            // 
-            // videosTableLayout
-            // 
-            this.videosTableLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.videosTableLayout.ColumnCount = 3;
-            this.videosTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.videosTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.videosTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.videosTableLayout.Controls.Add(this.videoView1, 0, 0);
-            this.videosTableLayout.Controls.Add(this.videoView2, 1, 0);
-            this.videosTableLayout.Controls.Add(this.videoView3, 0, 1);
-            this.videosTableLayout.Controls.Add(this.videoView4, 1, 1);
-            this.videosTableLayout.Controls.Add(this.videoView5, 0, 2);
-            this.videosTableLayout.Controls.Add(this.videoView6, 1, 2);
-            this.videosTableLayout.Controls.Add(this.videoView7, 2, 0);
-            this.videosTableLayout.Controls.Add(this.videoView8, 2, 1);
-            this.videosTableLayout.Controls.Add(this.videoView9, 2, 2);
-            this.videosTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videosTableLayout.Location = new System.Drawing.Point(0, 0);
-            this.videosTableLayout.Name = "videosTableLayout";
-            this.videosTableLayout.RowCount = 3;
-            this.videosTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.videosTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.videosTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.videosTableLayout.Size = new System.Drawing.Size(1667, 844);
-            this.videosTableLayout.TabIndex = 0;
-            // 
-            // grid9
-            // 
-            this.grid9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.grid9.Location = new System.Drawing.Point(554, 4);
-            this.grid9.Margin = new System.Windows.Forms.Padding(1);
-            this.grid9.Name = "grid9";
-            this.grid9.Size = new System.Drawing.Size(69, 47);
-            this.grid9.TabIndex = 8;
-            this.grid9.Text = " --|--|--   --|--|--";
-            this.grid9.UseVisualStyleBackColor = true;
-            this.grid9.Click += new System.EventHandler(this.grid9_Click);
             // 
             // button1
             // 
@@ -379,6 +368,35 @@
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
             // 
+            // videosTableLayout
+            // 
+            this.videosTableLayout.AllowDrop = true;
+            this.videosTableLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.videosTableLayout.ColumnCount = 3;
+            this.videosTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.videosTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.videosTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.videosTableLayout.Controls.Add(this.videoView1, 0, 0);
+            this.videosTableLayout.Controls.Add(this.videoView2, 1, 0);
+            this.videosTableLayout.Controls.Add(this.videoView4, 0, 1);
+            this.videosTableLayout.Controls.Add(this.videoView5, 1, 1);
+            this.videosTableLayout.Controls.Add(this.videoView7, 0, 2);
+            this.videosTableLayout.Controls.Add(this.videoView8, 1, 2);
+            this.videosTableLayout.Controls.Add(this.videoView3, 2, 0);
+            this.videosTableLayout.Controls.Add(this.videoView6, 2, 1);
+            this.videosTableLayout.Controls.Add(this.videoView9, 2, 2);
+            this.videosTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.videosTableLayout.Location = new System.Drawing.Point(0, 0);
+            this.videosTableLayout.Name = "videosTableLayout";
+            this.videosTableLayout.RowCount = 3;
+            this.videosTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.videosTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.videosTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.videosTableLayout.Size = new System.Drawing.Size(1667, 844);
+            this.videosTableLayout.TabIndex = 0;
+            this.videosTableLayout.DragDrop += new System.Windows.Forms.DragEventHandler(this.videosTableLayout_DragDrop);
+            this.videosTableLayout.DragOver += new System.Windows.Forms.DragEventHandler(this.videosTableLayout_DragOver);
+            // 
             // videoView1
             // 
             this.videoView1.BackColor = System.Drawing.Color.Black;
@@ -386,7 +404,7 @@
             this.videoView1.Location = new System.Drawing.Point(5, 5);
             this.videoView1.MediaPlayer = null;
             this.videoView1.Name = "videoView1";
-            this.videoView1.Size = new System.Drawing.Size(547, 272);
+            this.videoView1.Size = new System.Drawing.Size(546, 272);
             this.videoView1.TabIndex = 0;
             this.videoView1.Text = "videoView1";
             // 
@@ -394,103 +412,89 @@
             // 
             this.videoView2.BackColor = System.Drawing.Color.Black;
             this.videoView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView2.Location = new System.Drawing.Point(560, 5);
+            this.videoView2.Location = new System.Drawing.Point(559, 5);
             this.videoView2.MediaPlayer = null;
             this.videoView2.Name = "videoView2";
-            this.videoView2.Size = new System.Drawing.Size(547, 272);
+            this.videoView2.Size = new System.Drawing.Size(546, 272);
             this.videoView2.TabIndex = 1;
             this.videoView2.Text = "videoView2";
-            // 
-            // videoView3
-            // 
-            this.videoView3.BackColor = System.Drawing.Color.Black;
-            this.videoView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView3.Location = new System.Drawing.Point(5, 285);
-            this.videoView3.MediaPlayer = null;
-            this.videoView3.Name = "videoView3";
-            this.videoView3.Size = new System.Drawing.Size(547, 272);
-            this.videoView3.TabIndex = 2;
-            this.videoView3.Text = "videoView3";
             // 
             // videoView4
             // 
             this.videoView4.BackColor = System.Drawing.Color.Black;
             this.videoView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView4.Location = new System.Drawing.Point(560, 285);
+            this.videoView4.Location = new System.Drawing.Point(5, 285);
             this.videoView4.MediaPlayer = null;
             this.videoView4.Name = "videoView4";
-            this.videoView4.Size = new System.Drawing.Size(547, 272);
-            this.videoView4.TabIndex = 3;
-            this.videoView4.Text = "videoView4";
+            this.videoView4.Size = new System.Drawing.Size(546, 272);
+            this.videoView4.TabIndex = 2;
+            this.videoView4.Text = "videoView3";
             // 
             // videoView5
             // 
             this.videoView5.BackColor = System.Drawing.Color.Black;
             this.videoView5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView5.Location = new System.Drawing.Point(5, 565);
+            this.videoView5.Location = new System.Drawing.Point(559, 285);
             this.videoView5.MediaPlayer = null;
             this.videoView5.Name = "videoView5";
-            this.videoView5.Size = new System.Drawing.Size(547, 274);
-            this.videoView5.TabIndex = 4;
-            this.videoView5.Text = "videoView5";
-            // 
-            // videoView6
-            // 
-            this.videoView6.BackColor = System.Drawing.Color.Black;
-            this.videoView6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView6.Location = new System.Drawing.Point(560, 565);
-            this.videoView6.MediaPlayer = null;
-            this.videoView6.Name = "videoView6";
-            this.videoView6.Size = new System.Drawing.Size(547, 274);
-            this.videoView6.TabIndex = 5;
-            this.videoView6.Text = "videoView6";
+            this.videoView5.Size = new System.Drawing.Size(546, 272);
+            this.videoView5.TabIndex = 3;
+            this.videoView5.Text = "videoView4";
             // 
             // videoView7
             // 
             this.videoView7.BackColor = System.Drawing.Color.Black;
             this.videoView7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView7.Location = new System.Drawing.Point(1115, 5);
+            this.videoView7.Location = new System.Drawing.Point(5, 565);
             this.videoView7.MediaPlayer = null;
             this.videoView7.Name = "videoView7";
-            this.videoView7.Size = new System.Drawing.Size(547, 272);
-            this.videoView7.TabIndex = 6;
-            this.videoView7.Text = "videoView7";
+            this.videoView7.Size = new System.Drawing.Size(546, 274);
+            this.videoView7.TabIndex = 4;
+            this.videoView7.Text = "videoView5";
             // 
             // videoView8
             // 
             this.videoView8.BackColor = System.Drawing.Color.Black;
             this.videoView8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView8.Location = new System.Drawing.Point(1115, 285);
+            this.videoView8.Location = new System.Drawing.Point(559, 565);
             this.videoView8.MediaPlayer = null;
             this.videoView8.Name = "videoView8";
-            this.videoView8.Size = new System.Drawing.Size(547, 272);
-            this.videoView8.TabIndex = 7;
-            this.videoView8.Text = "videoView8";
+            this.videoView8.Size = new System.Drawing.Size(546, 274);
+            this.videoView8.TabIndex = 5;
+            this.videoView8.Text = "videoView6";
+            // 
+            // videoView3
+            // 
+            this.videoView3.BackColor = System.Drawing.Color.Black;
+            this.videoView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.videoView3.Location = new System.Drawing.Point(1113, 5);
+            this.videoView3.MediaPlayer = null;
+            this.videoView3.Name = "videoView3";
+            this.videoView3.Size = new System.Drawing.Size(549, 272);
+            this.videoView3.TabIndex = 6;
+            this.videoView3.Text = "videoView7";
+            // 
+            // videoView6
+            // 
+            this.videoView6.BackColor = System.Drawing.Color.Black;
+            this.videoView6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.videoView6.Location = new System.Drawing.Point(1113, 285);
+            this.videoView6.MediaPlayer = null;
+            this.videoView6.Name = "videoView6";
+            this.videoView6.Size = new System.Drawing.Size(549, 272);
+            this.videoView6.TabIndex = 7;
+            this.videoView6.Text = "videoView8";
             // 
             // videoView9
             // 
             this.videoView9.BackColor = System.Drawing.Color.Black;
             this.videoView9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView9.Location = new System.Drawing.Point(1115, 565);
+            this.videoView9.Location = new System.Drawing.Point(1113, 565);
             this.videoView9.MediaPlayer = null;
             this.videoView9.Name = "videoView9";
-            this.videoView9.Size = new System.Drawing.Size(547, 274);
+            this.videoView9.Size = new System.Drawing.Size(549, 274);
             this.videoView9.TabIndex = 8;
             this.videoView9.Text = "videoView9";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label1.Location = new System.Drawing.Point(811, 3);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(991, 49);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Video Management System";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -525,12 +529,12 @@
             this.videosTableLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.videoView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoView3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.videoView6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoView6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.videoView9)).EndInit();
             this.ResumeLayout(false);
 
@@ -562,16 +566,16 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label1;
         private LibVLCSharp.WinForms.VideoView videoView1;
         private LibVLCSharp.WinForms.VideoView videoView2;
-        private LibVLCSharp.WinForms.VideoView videoView3;
         private LibVLCSharp.WinForms.VideoView videoView4;
         private LibVLCSharp.WinForms.VideoView videoView5;
-        private LibVLCSharp.WinForms.VideoView videoView6;
         private LibVLCSharp.WinForms.VideoView videoView7;
         private LibVLCSharp.WinForms.VideoView videoView8;
+        private LibVLCSharp.WinForms.VideoView videoView3;
+        private LibVLCSharp.WinForms.VideoView videoView6;
         private LibVLCSharp.WinForms.VideoView videoView9;
-        private System.Windows.Forms.Label label1;
     }
 }
 
