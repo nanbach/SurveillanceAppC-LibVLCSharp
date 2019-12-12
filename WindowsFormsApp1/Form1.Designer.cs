@@ -306,6 +306,7 @@
             this.treeView1.Size = new System.Drawing.Size(134, 430);
             this.treeView1.TabIndex = 0;
             this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
+            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
             // 
             // tableLayoutPanel3
             // 
@@ -404,7 +405,7 @@
             this.videoView1.Location = new System.Drawing.Point(5, 5);
             this.videoView1.MediaPlayer = null;
             this.videoView1.Name = "videoView1";
-            this.videoView1.Size = new System.Drawing.Size(546, 272);
+            this.videoView1.Size = new System.Drawing.Size(547, 272);
             this.videoView1.TabIndex = 0;
             this.videoView1.Text = "videoView1";
             // 
@@ -412,10 +413,10 @@
             // 
             this.videoView2.BackColor = System.Drawing.Color.Black;
             this.videoView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView2.Location = new System.Drawing.Point(559, 5);
+            this.videoView2.Location = new System.Drawing.Point(560, 5);
             this.videoView2.MediaPlayer = null;
             this.videoView2.Name = "videoView2";
-            this.videoView2.Size = new System.Drawing.Size(546, 272);
+            this.videoView2.Size = new System.Drawing.Size(547, 272);
             this.videoView2.TabIndex = 1;
             this.videoView2.Text = "videoView2";
             // 
@@ -426,7 +427,7 @@
             this.videoView4.Location = new System.Drawing.Point(5, 285);
             this.videoView4.MediaPlayer = null;
             this.videoView4.Name = "videoView4";
-            this.videoView4.Size = new System.Drawing.Size(546, 272);
+            this.videoView4.Size = new System.Drawing.Size(547, 272);
             this.videoView4.TabIndex = 2;
             this.videoView4.Text = "videoView3";
             // 
@@ -434,10 +435,10 @@
             // 
             this.videoView5.BackColor = System.Drawing.Color.Black;
             this.videoView5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView5.Location = new System.Drawing.Point(559, 285);
+            this.videoView5.Location = new System.Drawing.Point(560, 285);
             this.videoView5.MediaPlayer = null;
             this.videoView5.Name = "videoView5";
-            this.videoView5.Size = new System.Drawing.Size(546, 272);
+            this.videoView5.Size = new System.Drawing.Size(547, 272);
             this.videoView5.TabIndex = 3;
             this.videoView5.Text = "videoView4";
             // 
@@ -448,7 +449,7 @@
             this.videoView7.Location = new System.Drawing.Point(5, 565);
             this.videoView7.MediaPlayer = null;
             this.videoView7.Name = "videoView7";
-            this.videoView7.Size = new System.Drawing.Size(546, 274);
+            this.videoView7.Size = new System.Drawing.Size(547, 274);
             this.videoView7.TabIndex = 4;
             this.videoView7.Text = "videoView5";
             // 
@@ -456,10 +457,10 @@
             // 
             this.videoView8.BackColor = System.Drawing.Color.Black;
             this.videoView8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView8.Location = new System.Drawing.Point(559, 565);
+            this.videoView8.Location = new System.Drawing.Point(560, 565);
             this.videoView8.MediaPlayer = null;
             this.videoView8.Name = "videoView8";
-            this.videoView8.Size = new System.Drawing.Size(546, 274);
+            this.videoView8.Size = new System.Drawing.Size(547, 274);
             this.videoView8.TabIndex = 5;
             this.videoView8.Text = "videoView6";
             // 
@@ -467,10 +468,10 @@
             // 
             this.videoView3.BackColor = System.Drawing.Color.Black;
             this.videoView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView3.Location = new System.Drawing.Point(1113, 5);
+            this.videoView3.Location = new System.Drawing.Point(1115, 5);
             this.videoView3.MediaPlayer = null;
             this.videoView3.Name = "videoView3";
-            this.videoView3.Size = new System.Drawing.Size(549, 272);
+            this.videoView3.Size = new System.Drawing.Size(547, 272);
             this.videoView3.TabIndex = 6;
             this.videoView3.Text = "videoView7";
             // 
@@ -478,10 +479,10 @@
             // 
             this.videoView6.BackColor = System.Drawing.Color.Black;
             this.videoView6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView6.Location = new System.Drawing.Point(1113, 285);
+            this.videoView6.Location = new System.Drawing.Point(1115, 285);
             this.videoView6.MediaPlayer = null;
             this.videoView6.Name = "videoView6";
-            this.videoView6.Size = new System.Drawing.Size(549, 272);
+            this.videoView6.Size = new System.Drawing.Size(547, 272);
             this.videoView6.TabIndex = 7;
             this.videoView6.Text = "videoView8";
             // 
@@ -489,10 +490,10 @@
             // 
             this.videoView9.BackColor = System.Drawing.Color.Black;
             this.videoView9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoView9.Location = new System.Drawing.Point(1113, 565);
+            this.videoView9.Location = new System.Drawing.Point(1115, 565);
             this.videoView9.MediaPlayer = null;
             this.videoView9.Name = "videoView9";
-            this.videoView9.Size = new System.Drawing.Size(549, 274);
+            this.videoView9.Size = new System.Drawing.Size(547, 274);
             this.videoView9.TabIndex = 8;
             this.videoView9.Text = "videoView9";
             // 
