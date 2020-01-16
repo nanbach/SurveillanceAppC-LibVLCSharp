@@ -28,7 +28,7 @@ namespace WindowsFormsApp1
         private static Dictionary<DataRow, MediaPlayer> recordMP = new Dictionary<DataRow, MediaPlayer>();
         private static Dictionary<string, Media> recordM = new Dictionary<string, Media>();
 
-        private static System.Timers.Timer aTimer;
+        private static System.Timers.Timer aTimer, bTimer;
 
         public Form1()
         {
@@ -52,11 +52,7 @@ namespace WindowsFormsApp1
         {
             _cameraDT = execSQL("SELECT * FROM camera;");
             populateStreetTreeView();
-            camRecord();
-            //treeView1.Nodes["zone1"].Nodes["street1"].Nodes["A"].Nodes["192.168.0.91"].EnsureVisible();
-            treeView1.CheckBoxes = true;
-            treeView1.SelectedNode = treeView1.Nodes["zone1"].Nodes["street1"].Nodes["A"].Nodes["192.168.0.91"];
-            Console.WriteLine(treeView1.SelectedNode);
+            //camRecord();
         }
 
         // initialization
@@ -119,16 +115,18 @@ namespace WindowsFormsApp1
         // cam recording
         private void camRecord()
         {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("........................................");
             int i = 0;
             foreach (DataRow camera in _cameraDT.Rows)
             {
                 string ip = camera["ip"].ToString(), url = camera["url"].ToString();
-                Console.WriteLine("starting: " + ip);
+                sb.AppendLine("starting: " + ip);
                 // Create new media with HLS link
                 Media media = new Media(_libvlc, url, FromType.FromLocation);
                 // Define stream output options. 
                 // In this case stream to a file with the given path and play locally the stream while streaming it.
-                media.AddOption(":sout=#transcode{scodec=none}:duplicate{dst=std{access=file,mux=ts,dst='" + GetRecordFilePath(ip) + "'}");
+                media.AddOption(":sout=#transcode{scodec=none}:duplicate{dst=std{access=file,mux=mp4,dst='" + GetRecordFilePath(ip) + "'}");
                 media.AddOption(":no-sout-all:sout-keep");
                 // create video view for the corresponding url
                 VideoView videoView = new VideoView();
@@ -141,30 +139,27 @@ namespace WindowsFormsApp1
                 // ensure only first 3 ips
                 if (++i == 3) break;
             }
-            // Create a timer with a two second interval.
+            // Create a timer with end of half hour interval.
             var now_timespan = new TimeSpan(0, 0, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);//15.20.13
             var to_timespan = new TimeSpan(0, 0, ((DateTime.Now.Minute >= 30) ? 59 : 29), 59, 980);//15.29.29
             var dif_timespan = to_timespan - now_timespan;
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("........................................");
-            sb.AppendLine("starting " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
+            sb.AppendLine("... " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
             sb.AppendLine("expected return " + to_timespan);
-            Console.WriteLine("starting " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
-            Console.WriteLine("expected return " + to_timespan);
             aTimer = new System.Timers.Timer(dif_timespan.TotalMilliseconds);
             // Hook up the Elapsed event for the timer.
             aTimer.Elapsed += (sender, e) => OnTimedEvent(sender, e);
             aTimer.AutoReset = false;
             aTimer.Enabled = true;
             File.AppendAllText(currentDirectory + "log.txt", sb.ToString());
-            sb.Clear();
-            Console.WriteLine("appended to log... " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
-
-            // timer for checking that the cameras are constantly playing
-            System.Timers.Timer bTimer = new System.Timers.Timer(60000);
-            bTimer.Elapsed += (sender, e) => OnTimedEvent2(sender, e);
-            bTimer.AutoReset = true;
+            // timer for checking that the cameras are constantly playing (restart them if not) every 1 min
+            to_timespan = new TimeSpan(0, 0, DateTime.Now.Minute, 59, 980);
+            dif_timespan = to_timespan - now_timespan;
+            sb.AppendLine("expected revival " + to_timespan);
+            bTimer = new System.Timers.Timer(dif_timespan.TotalMilliseconds);
+            bTimer.Elapsed += (sender, e) => reviveCams(sender, e);
+            bTimer.AutoReset = false;
             bTimer.Enabled = true;
+            sb.Clear();
         }
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
@@ -174,18 +169,18 @@ namespace WindowsFormsApp1
             var to_timespan = new TimeSpan(0, 0, ((DateTime.Now.Minute >= 29  && DateTime.Now.Minute < 59) ? 59 : 29), 59, 999);
             sb.AppendLine("expected return " + to_timespan);
             var dif_timespan = to_timespan - now_timespan;
-            aTimer.Interval = dif_timespan.TotalMilliseconds;
+            aTimer.Interval = Math.Abs(dif_timespan.TotalMilliseconds);
             sb.AppendLine("closing all... " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
             foreach(DataRow camera in recordMP.Keys)
             {
-                sb.AppendLine("closing " + camera["ip"] + " " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
+                sb.AppendLine($"closing {camera["ip"]} {DateTime.Now.ToString("HH:mm:ss")} {DateTime.Now.Millisecond}");
                 MediaPlayer mp = recordMP[camera];
                 mp.Stop();
             }
             foreach(DataRow camera in recordMP.Keys)
             {
                 Media m = recordM[camera["ip"].ToString()];
-                m.AddOption(":sout=#transcode{scodec=none}:duplicate{dst=std{access=file,mux=ts,dst='" + GetRecordFilePath(camera["ip"].ToString()) + "'}");
+                m.AddOption(":sout=#transcode{scodec=none}:duplicate{dst=std{access=file,mux=mp4,dst='" + GetRecordFilePath(camera["ip"].ToString()) + "'}}");
                 m.AddOption(":no-sout-all:sout-keep");
                 recordM[camera["ip"].ToString()] = m;
             }
@@ -205,13 +200,20 @@ namespace WindowsFormsApp1
         {
             var dir = Path.Combine(currentDirectory, "data/" + DateTime.Now.ToString("yyyy-MM-dd")) + "/" + cam_ip;
             Directory.CreateDirectory(dir);
-            return Path.Combine(dir, DateTime.Now.ToString("HH.mm.ss") + ".ts");
+            return Path.Combine(dir, DateTime.Now.ToString("HH.mm.ss") + ".mp4");
         }
-        private static void OnTimedEvent2(Object source, ElapsedEventArgs e)
+        private static void reviveCams(Object source, ElapsedEventArgs e)
         {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("reviving... " + DateTime.Now.ToString("HH:mm:ss") + " " + DateTime.Now.Millisecond);
+            var now_timespan = new TimeSpan(0, 0, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
+            var to_timespan = new TimeSpan(0, 0, DateTime.Now.Minute, 59, 998);
+            sb.AppendLine("expected revival " + to_timespan);
+            var dif_timespan = to_timespan - now_timespan;
+            bTimer.Interval = Math.Abs(dif_timespan.TotalMilliseconds+1.5);
             switch (DateTime.Now.Minute)
             {
-                case 29 | 30 | 59 | 00:
+                case 30 | 00:
                     return;
             };
             foreach (DataRow camera in recordMP.Keys)
@@ -224,9 +226,11 @@ namespace WindowsFormsApp1
                     mp.Media.AddOption(":sout=#transcode{scodec=none}:duplicate{dst=std{access=file,mux=ts,dst='" + GetRecordFilePath(camera["ip"].ToString()) + "'}");
                     mp.Media.AddOption(":no-sout-all:sout-keep");
                     mp.Play();
-                    Console.WriteLine("restarting cam " + camera["ip"] + " " + DateTime.Now.ToString("HH:mm:ss"));
+                    sb.AppendLine("restarting cam " + camera["ip"] + " " + DateTime.Now.ToString("HH:mm:ss"));
                 }
             }
+            File.AppendAllText(currentDirectory + "log.txt", sb.ToString());
+            sb.Clear();
         }
         // grid
         private void grid1_Click(object sender, EventArgs e)
